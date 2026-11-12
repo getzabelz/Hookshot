@@ -563,8 +563,8 @@ HDR, Detail, and GPU and memory (last: the rows to change when something is wron
 - **Auto run:** the sprint goes on after the run button (A) is let go. Hold A for 0.4 s while moving (the roll, then
   the sprint, as usual), let go, and A stays held for the game while the stick stays pushed; a short press (a roll on
   its own) is not kept. Letting go of the stick or pressing A again stops it (a long hold keeps it again). Only while
-  Link is yours to move: an event (a talk, a cutscene), the pause menu, the map and the Insert menu end it, so A never
-  picks an entry or skips text there.
+  Link is yours to move: an event (a talk, a cutscene), the pause menu, the map, the Insert menu and the ocarina's notes
+  end it, so A never picks an entry, skips text or plays a note there.
 - **Rumble strength** scales the controller's rumble: 100% is the game's own, Off turns it off. The game's HD rumble
   goes to a controller's heavy and light motors by its frequency.
 - **Motion controls** (Controls tab, Motion page): the controller's gyroscope aims where the game uses motion, as on the Switch. It works with

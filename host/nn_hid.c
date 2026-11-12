@@ -1104,14 +1104,15 @@ static void npad_states(Ctx *c) {
         }
         /* (hookshot) Auto run (Controls; host/auto_run.h): A (the sprint) held long enough while moving and then let go
            stays held for the game while the stick is pushed and Link is the player's to move. After the flight and the
-           free camera, which take the stick (none left: nothing kept) */
+           free camera, which take the stick (none left: nothing kept). The ocarina's note wait (hos_oc_wait 1: A is a
+           note there, oc_pad_word) ends it too, so a kept A is never heard as a held note */
         {
             int hos_oot_player_free(void);
             static AutoRun auto_run;
             static int logged_lock;
             const int on = rx_option(HOS_OPT_AUTO_RUN, 0) != 0;
-            buttons = hos_auto_run(&auto_run, buttons, stick[0], stick[1], on, !menu_open && hos_oot_player_free(),
-                                   hos_now_ns());
+            buttons = hos_auto_run(&auto_run, buttons, stick[0], stick[1], on,
+                                   !menu_open && hos_oc_wait != 1 && hos_oot_player_free(), hos_now_ns());
             if (auto_run.locked && !logged_lock) logged_lock = 1, hos_log("hid: auto run: A kept held for the sprint");
         }
         __atomic_store_n(&flight_input, flight, __ATOMIC_RELAXED);

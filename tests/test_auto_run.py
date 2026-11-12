@@ -2,7 +2,7 @@
 
 host/auto_run.h keeps A held for the game after it was held for 0.4 s while the left stick was pushed and then let go,
 until the stick is let go, A is pressed again, Plus or Minus is pressed, or Link is no longer the player's to move (an
-event, the pause, the Insert menu). host/nn_hid.c runs it on each read of the controller with the row
+event, the pause, the Insert menu, the ocarina's note wait). host/nn_hid.c runs it on each read of the controller with the row
 (HOS_OPT_AUTO_RUN, answered by gpu/vk/vk_replay.cpp) and host/hos_main.c's hos_oot_player_free. This compiles the
 header alone and plays presses through it, and checks that the row, its answer, the call and the readme are there.
 
@@ -42,9 +42,10 @@ def source_checks():
     check(re.findall(r"HOS_OPT_\w+ = (\d+)", api).count("55") == 1, "option 55 is taken twice in vk_api.h")
     hid = read("host/nn_hid.c")
     check('#include "auto_run.h"' in hid, "nn_hid.c does not include auto_run.h")
-    check(re.search(r"buttons = hos_auto_run\(&auto_run, buttons, stick\[0\], stick\[1\], on, "
-                    r"!menu_open && hos_oot_player_free\(\),\s*hos_now_ns\(\)\)", hid),
-          "nn_hid.c does not run Auto run with the row, the Insert menu and hos_oot_player_free")
+    check(re.search(r"buttons = hos_auto_run\(&auto_run, buttons, stick\[0\], stick\[1\], on,\s*"
+                    r"!menu_open && hos_oc_wait != 1 && hos_oot_player_free\(\),\s*hos_now_ns\(\)\)", hid),
+          "nn_hid.c does not run Auto run with the row, the Insert menu, the ocarina's note wait and "
+          "hos_oot_player_free")
     main = read("host/hos_main.c")
     check("int hos_oot_player_free(void)" in main, "hos_main.c has no hos_oot_player_free")
     check(re.search(r"__atomic_store_n\(&player_free_seen, oot_event_playing\(c\) \? 0 : hos_now_ns\(\)", main),
